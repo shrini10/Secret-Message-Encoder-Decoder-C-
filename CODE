@@ -1,0 +1,48 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Function to encrypt the message
+string encrypt(string text, int shift) {
+    string result = "";
+    for (char c : text) {
+        if (isalpha(c)) {
+            char base = isupper(c) ? 'A' : 'a';
+            result += (c - base + shift) % 26 + base;
+        } else {
+            result += c; // Keep spaces and special characters unchanged
+        }
+    }
+    return result;
+}
+
+// Function to decrypt the message
+string decrypt(string text, int shift) {
+    return encrypt(text, 26 - shift); // Reverse shift for decryption
+}
+
+int main() {
+    int choice, shift;
+    string message;
+
+    cout << "Secret Message Encoder & Decoder 🔐\n";
+    cout << "1. Encrypt a message\n2. Decrypt a message\nChoose an option: ";
+    cin >> choice;
+    cin.ignore(); // Clear buffer
+
+    cout << "Enter your message: ";
+    getline(cin, message);
+    cout << "Enter shift key (1-25): ";
+    cin >> shift;
+
+    if (choice == 1) {
+        cout << "🔒 Encrypted Message: " << encrypt(message, shift) << endl;
+    } else if (choice == 2) {
+        cout << "🔓 Decrypted Message: " << decrypt(message, shift) << endl;
+    } else {
+        cout << "Invalid option! ❌" << endl;
+    }
+
+    return 0;
+}
